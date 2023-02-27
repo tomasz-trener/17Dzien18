@@ -54,7 +54,7 @@ namespace P04Sklep.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ServiceReponse<Product[]>>> CreateProduct([FromBody] Product product)
+        public async Task<ActionResult<ServiceReponse<Product>>> CreateProduct([FromBody] Product product)
         {
             var result = await _productService.CreateProduct(product);
             return Ok(result);

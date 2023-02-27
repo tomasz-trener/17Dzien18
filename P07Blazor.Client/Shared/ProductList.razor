@@ -12,6 +12,9 @@
         <div id="style-3_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
             <div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="style-3_length"><label>Results :  <select name="style-3_length" aria-controls="style-3" class="form-control"><option value="5">5</option><option value="10">10</option><option value="20">20</option><option value="50">50</option></select></label></div></div><div class="col-sm-12 col-md-6"><div id="style-3_filter" class="dataTables_filter"><label><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><input type="search" class="form-control" placeholder="Search..." aria-controls="style-3"></label></div></div></div><div class="row">
                 <div class="col-sm-12">
+
+                    <button @onclick="NewProduct_OnClick" class="btn btn-secondary mb-2">New Product</button>
+
                     <table id="style-3" class="table style-3 table-hover dataTable no-footer" role="grid" aria-describedby="style-3_info">
                         <thead>
                             <tr role="row">
@@ -83,7 +86,15 @@
                     Description = productDescription
                 };
 
-            await ProductService.EditProduct(edited);
+            if (id==0) // tzn tworzymy nowy produkt
+            {
+                    await ProductService.CreateProduct(edited);
+                   // StateHasChanged();
+            }
+            else
+            { // edytujemy
+                    await ProductService.EditProduct(edited);      
+            }  
             EditingId = null;
         }
         else
@@ -95,8 +106,27 @@
             productDescription = editingProduct.Description;
         }
         // EditingState = !EditingState;
+    }
 
+    protected override async Task OnInitializedAsync()
+    {
+        ProductService.ProductsChanged += StateHasChanged;
+    }
 
+    public void Dispose()
+    {
+        ProductService.ProductsChanged -= StateHasChanged;
+    }
+
+    private async void NewProduct_OnClick()
+    {
+        ProductVM newProduct = new ProductVM()
+            {
+                Id = 0
+            };
+        EditingId = 0;
+
+        ProductService.ProductsVM.Insert(0, newProduct);
     }
 
     private async void Delete_OnClick(int id)

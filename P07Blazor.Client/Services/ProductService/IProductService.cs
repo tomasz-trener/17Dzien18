@@ -11,6 +11,8 @@ namespace P07Blazor.Client.Services.ProductService
         ProductVM FindProduct(int id);
 
         Task EditProduct(ProductVM productVM);
+        Task CreateProduct(ProductVM productVM);
+
         Task DeleteProduct(int id);
 
         Task GetProducts();

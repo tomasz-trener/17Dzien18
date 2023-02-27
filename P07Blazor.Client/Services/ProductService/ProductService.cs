@@ -58,6 +58,7 @@ namespace P07Blazor.Client.Services.ProductService
 
             product.Product_ProductAdjectives = null;
             var result= _httpClient.PutAsJsonAsync<Product>("api/product", product);
+            ProductsChanged?.Invoke();
         }
 
         public async Task DeleteProduct(int id)
@@ -67,6 +68,30 @@ namespace P07Blazor.Client.Services.ProductService
             var result = _httpClient.DeleteAsync($"api/product/{id}");
             productsCache.RemoveAll(x => x.Id == id);
             ProductsVM.RemoveAll(x => x.Id == id);
+        }
+
+        public async Task CreateProduct(ProductVM productVM)
+        {
+            Product newProduct = new Product();
+            newProduct.Title = productVM.Title;
+            newProduct.Description = productVM.Description;
+
+            //dodajemy produkty do bazy 
+            var result = await _httpClient.PostAsJsonAsync($"api/product", newProduct);
+
+            var productData = await result.Content.ReadFromJsonAsync<ServiceReponse<Product>>();
+            
+            var newAddedProdcut = productData.Data;
+
+            //teraz dodajemy loklanie te produkty 
+            productsCache.Insert(0, newAddedProdcut);
+            
+            // musimy zakutaluzowac nasza lolakną liste produktów
+            var newAddedProductVM = ProductsVM.FirstOrDefault(x => x.Id == 0);
+            newAddedProductVM.Id = newAddedProdcut.Id;
+            newAddedProductVM.Title = productVM.Title;
+            newAddedProductVM.Description = productVM.Description;
+            ProductsChanged?.Invoke();
         }
 
         public async Task SearchProducts(string text, int page=1, int pageSize=5)
@@ -89,6 +114,6 @@ namespace P07Blazor.Client.Services.ProductService
             ProductsChanged?.Invoke();
         }
 
-      
+       
     }
 }
