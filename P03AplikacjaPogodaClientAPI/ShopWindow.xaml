@@ -64,37 +64,37 @@
                 </ListView.ItemTemplate>
 
             </ListView>
+            <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Auto">
+                <StackPanel >
+                    <TextBlock Style="{StaticResource TextBlockStyle}" Text="Title"></TextBlock>
+                    <TextBox Text="{Binding SelectedProduct.Title, Mode=TwoWay}"></TextBox>
+                    <TextBlock Text="Description"></TextBlock>
 
-            <StackPanel Grid.Column="1">
-                <TextBlock Style="{StaticResource TextBlockStyle}" Text="Title"></TextBlock>
-                <TextBox Text="{Binding SelectedProduct.Title, Mode=TwoWay}"></TextBox>
-                <TextBlock Text="Description"></TextBlock>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" ></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
 
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" ></ColumnDefinition>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    
-                    <TextBox Text="{Binding SelectedProduct.Description, Mode=TwoWay}"></TextBox>
-                    <Button Grid.Column="1" Content="Speak" Command="{Binding SpeakCommand}"></Button>
+                        <TextBox Text="{Binding SelectedProduct.Description, Mode=TwoWay}"></TextBox>
+                        <Button Grid.Column="1" Content="Speak" Command="{Binding SpeakCommand}"></Button>
 
-                    <!--dotnet add package WpfAnimatedGif-->
-                    <Image Visibility="{Binding Speaking, Converter={StaticResource boolToVisibilityConverter}}" Grid.Column="2" Width="20" gif:ImageBehavior.AnimatedSource="/images/phone.gif" ></Image>
-                </Grid>
-                
-                
-                
-                <TextBlock Text="Color"></TextBlock>
-                <TextBox  Text="{Binding SelectedProduct.Color, Mode=TwoWay}"></TextBox>
-                <TextBlock Text="Image url"></TextBlock>
-                <TextBox Text="{Binding SelectedProduct.ImageUrl, Mode=TwoWay}"></TextBox>
-                <Button Command="{Binding EditCommand}" Content="Save"></Button>
-                <Button Command="{Binding DeleteCommand}" Content="Delete"></Button>
-                <Button Command="{Binding CreateCommand}" Content="Create"></Button>
-            </StackPanel>
-       
+                        <!--dotnet add package WpfAnimatedGif-->
+                        <Image Visibility="{Binding Speaking, Converter={StaticResource boolToVisibilityConverter}}" Grid.Column="2" Width="20" gif:ImageBehavior.AnimatedSource="/images/phone.gif" ></Image>
+                    </Grid>
+
+
+
+                    <TextBlock Text="Color"></TextBlock>
+                    <TextBox  Text="{Binding SelectedProduct.Color, Mode=TwoWay}"></TextBox>
+                    <TextBlock Text="Image url"></TextBlock>
+                    <TextBox Text="{Binding SelectedProduct.ImageUrl, Mode=TwoWay}"></TextBox>
+                    <Button Command="{Binding EditCommand}" Content="Save"></Button>
+                    <Button Command="{Binding DeleteCommand}" Content="Delete"></Button>
+                    <Button Command="{Binding CreateCommand}" Content="Create"></Button>
+                </StackPanel>
+            </ScrollViewer>
         </Grid>
         
         
