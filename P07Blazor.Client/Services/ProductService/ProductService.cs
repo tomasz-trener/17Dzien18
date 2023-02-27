@@ -41,6 +41,34 @@ namespace P07Blazor.Client.Services.ProductService
             ProductsChanged?.Invoke();
         }
 
+        public ProductVM FindProduct(int id)
+        {
+            return ProductsVM.FirstOrDefault(x => x.Id == id);
+        }
+
+        public async Task EditProduct(ProductVM productVM)
+        {
+            var edited= ProductsVM.FirstOrDefault(x => x.Id == productVM.Id);
+            edited.Title = productVM.Title;
+            edited.Description = productVM.Description;
+
+            var product = new Product();
+            var result= _httpClient.PutAsJsonAsync<Product>("api/product", product);
+
+
+            //using (HttpClient client = new HttpClient())
+            //{
+            //    client.BaseAddress = new Uri(_baseURl);
+            //    var result = await client.PutAsJsonAsync("api/product", product);
+
+            //    var resultMessage = await result.Content.ReadAsStringAsync(); // w ten sposób możemy odczytać błąd, który leci z API
+
+            //    var content = await result.Content.ReadFromJsonAsync<ServiceReponse<Product>>();
+            //    return content.Data;
+            //}
+
+        }
+
         public async Task SearchProducts(string text, int page=1, int pageSize=5)
         {
             var result = await _httpClient.GetFromJsonAsync<ServiceReponse<Product[]>>($"api/product/search/{text}/{page}/{pageSize}");
@@ -60,5 +88,7 @@ namespace P07Blazor.Client.Services.ProductService
 
             ProductsChanged?.Invoke();
         }
+
+      
     }
 }

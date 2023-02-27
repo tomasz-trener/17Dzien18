@@ -8,6 +8,9 @@ namespace P07Blazor.Client.Services.ProductService
       //  Product[] Products { get; set; }
 
         ProductVM[] ProductsVM { get; set; }
+        ProductVM FindProduct(int id);
+
+        Task EditProduct(ProductVM productVM);
 
         Task GetProducts();
         event Action ProductsChanged;

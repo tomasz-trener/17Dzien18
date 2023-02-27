@@ -72,15 +72,30 @@
     //public bool EditingState = false;
     private int? EditingId { get; set; } = null;
 
-    private void Edit_OnClick(int id)
+    private async void Edit_OnClick(int id)
     {
+        if (EditingId != null && id == EditingId.Value) // zapisujemy dane
+        {
+            ProductVM edited = new ProductVM()
+                {
+                    Id =id,
+                    Title = productTitle,
+                    Description = productDescription
+                };
 
+            await ProductService.EditProduct(edited);
+            EditingId = null;
+        }
+        else
+        { // tzn ze przechodzimy w tryb dycji 
+            EditingId = id;
+
+            var editingProduct = ProductService.FindProduct(id);
+            productTitle = editingProduct.Title;
+            productDescription = editingProduct.Description;
+        }
         // EditingState = !EditingState;
-        EditingId = id;
-
-        var editingProduct = ProductService.ProductsVM.FirstOrDefault(x => x.Id == id);
-        productTitle = editingProduct.Title;
-        productDescription = editingProduct.Description;
+       
 
     }
 
