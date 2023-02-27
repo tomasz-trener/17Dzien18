@@ -16,14 +16,14 @@ namespace P07Blazor.Client.Services.ProductService
             _httpClient = httpClient;
         }
 
-        private Product[] productsCache { get; set; }
-        public ProductVM[] ProductsVM { get; set; }
+        private List<Product> productsCache { get; set; }
+        public List<ProductVM> ProductsVM { get; set; }
        
         public async Task GetProducts()
         {
             var result = await _httpClient.GetFromJsonAsync<ServiceReponse<Product[]>>("api/product");
 
-            productsCache = result.Data;
+            productsCache = result.Data.ToList();
 
             ProductsVM = result.Data.Select(x => new ProductVM()
             {
@@ -36,7 +36,7 @@ namespace P07Blazor.Client.Services.ProductService
                 PriceTo = x.Product_ProductAdjectives?.Max(y => y?.Price),
                 ImageUrl = x.ImageUrl
 
-            }).ToArray();
+            }).ToList();
 
             ProductsChanged?.Invoke();
         }
@@ -60,6 +60,15 @@ namespace P07Blazor.Client.Services.ProductService
             var result= _httpClient.PutAsJsonAsync<Product>("api/product", product);
         }
 
+        public async Task DeleteProduct(int id)
+        {
+            var deleted = productsCache.First(x => x.Id == id);
+
+            var result = _httpClient.DeleteAsync($"api/product/{id}");
+            productsCache.RemoveAll(x => x.Id == id);
+            ProductsVM.RemoveAll(x => x.Id == id);
+        }
+
         public async Task SearchProducts(string text, int page=1, int pageSize=5)
         {
             var result = await _httpClient.GetFromJsonAsync<ServiceReponse<Product[]>>($"api/product/search/{text}/{page}/{pageSize}");
@@ -75,7 +84,7 @@ namespace P07Blazor.Client.Services.ProductService
                 Adjectives = x.Product_ProductAdjectives?.Select(y => y.ProductAdjective.Name).ToArray(),
                 PriceFrom = x.Product_ProductAdjectives?.Min(y => y?.Price),
                 PriceTo = x.Product_ProductAdjectives?.Max(y => y?.Price)
-            }).ToArray();
+            }).ToList();
 
             ProductsChanged?.Invoke();
         }
