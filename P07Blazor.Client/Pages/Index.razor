@@ -1,0 +1,13 @@
+﻿@page "/"
+@inject IProductService ProductService
+
+<ProductSearchList />
+
+
+@code{
+    protected override async Task OnInitializedAsync()
+    {
+        //var products = (await ProductService.GetProducts()).Data;
+        await ProductService.GetProducts();
+    }
+}

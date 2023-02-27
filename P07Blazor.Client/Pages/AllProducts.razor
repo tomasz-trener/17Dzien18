@@ -1,0 +1,25 @@
+﻿@page "/allproducts"
+
+@using P05Sklep.Shared
+@using P07Blazor.Client.Services.ProductService
+@inject IProductService ProductService
+
+<h3>AllProducts</h3>
+
+@if (ProductService.Products == null)
+{
+    <p><em>Loading...</em></p>
+}else{
+   <ProductList />
+}
+
+@code {
+
+
+	protected override async Task OnInitializedAsync()
+	{
+		//var products = (await ProductService.GetProducts()).Data;
+		 await ProductService.GetProducts();
+	}
+
+}

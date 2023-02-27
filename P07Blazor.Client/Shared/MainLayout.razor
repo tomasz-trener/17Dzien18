@@ -1,0 +1,39 @@
+﻿@inherits LayoutComponentBase
+@inject IJSRuntime JSRuntime
+
+@code{
+
+  // [Inject]
+  //  protected IJSRuntime JSRuntime { get; set; }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            JSRuntime.InvokeVoidAsync("onBlazorReady");
+        }
+
+    }
+}
+ 
+<Header />
+    <!--  END NAVBAR  -->
+<!--  BEGIN MAIN CONTAINER  -->
+<div class="main-container" id="container">
+
+    <div class="overlay"></div>
+    <div class="search-overlay"></div>
+
+    <!--  BEGIN SIDEBAR  -->
+    <SidebarMenu />
+    <!--  END SIDEBAR  -->
+    <!--  BEGIN CONTENT AREA  -->
+    <div id="content" class="main-content">
+        @Body
+       
+        <Footer />
+    </div>
+    <!--  END CONTENT AREA  -->
+
+</div>
+<!-- END MAIN CONTAINER -->

@@ -1,0 +1,8 @@
+﻿
+
+setx ASPNETCORE_ENVIRONMENT "Development"
+dotnet ef database update 
+
+
+dotnet ef database update -- --environment Production
+

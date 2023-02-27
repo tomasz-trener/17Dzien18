@@ -1,0 +1,104 @@
+﻿<Window x:Class="P03AplikacjaPogodaClientAPI.ShopWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:P03AplikacjaPogodaClientAPI"
+        xmlns:vm="clr-namespace:P03AplikacjaPogodaClientAPI.ViewModels.ProductViewModel"
+        mc:Ignorable="d"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com"
+        xmlns:uc="clr-namespace:P03AplikacjaPogodaClientAPI.Controls"
+        xmlns:converters="clr-namespace:P03AplikacjaPogodaClientAPI.ViewModels.Converters"
+        Title="ShopWindow" Height="450" Width="800">
+
+    <!--<Window.Resources>
+        <vm:ProdcutWindowVM x:Key="vmData"></vm:ProdcutWindowVM>
+    </Window.Resources>-->
+    <Window.Resources>
+        <converters:BitmapImageConverter x:Key="imageUrlToBitmapConv"/>
+        <converters:ScreenHeightToRangeConverter x:Key="screenConverter" />
+        <BooleanToVisibilityConverter x:Key="boolToVisibilityConverter" />
+
+        <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="32" />
+            <Style.Triggers>
+
+                <DataTrigger Binding="{Binding Source={x:Static SystemParameters.PrimaryScreenHeight}, Converter={StaticResource screenConverter}}" Value="1080" >
+                    <Setter Property="FontSize" Value="15"></Setter>
+                </DataTrigger>
+
+                <DataTrigger Binding="{Binding Source={x:Static SystemParameters.PrimaryScreenHeight}, Converter={StaticResource screenConverter}}" Value="1440" >
+                    <Setter Property="FontSize" Value="30"></Setter>
+                </DataTrigger>
+
+            </Style.Triggers>
+        </Style>
+        
+    </Window.Resources>
+
+    <DockPanel x:Name="shopPanel">
+        <uc:HeaderControl DockPanel.Dock="Top"></uc:HeaderControl>
+        <Button DockPanel.Dock="Top" Content="Api test" x:Name="btnShopApiTest" Click="btnShopApiTest_Click"></Button>
+
+        <Grid DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+         
+            <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}">
+
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+
+                        <uc:ProductControl Product="{Binding}" ></uc:ProductControl>
+
+
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+
+            <StackPanel Grid.Column="1">
+                <TextBlock Style="{StaticResource TextBlockStyle}" Text="Title"></TextBlock>
+                <TextBox Text="{Binding SelectedProduct.Title, Mode=TwoWay}"></TextBox>
+                <TextBlock Text="Description"></TextBlock>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" ></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    
+                    <TextBox Text="{Binding SelectedProduct.Description, Mode=TwoWay}"></TextBox>
+                    <Button Grid.Column="1" Content="Speak" Command="{Binding SpeakCommand}"></Button>
+
+                    <!--dotnet add package WpfAnimatedGif-->
+                    <Image Visibility="{Binding Speaking, Converter={StaticResource boolToVisibilityConverter}}" Grid.Column="2" Width="20" gif:ImageBehavior.AnimatedSource="/images/phone.gif" ></Image>
+                </Grid>
+                
+                
+                
+                <TextBlock Text="Color"></TextBlock>
+                <TextBox  Text="{Binding SelectedProduct.Color, Mode=TwoWay}"></TextBox>
+                <TextBlock Text="Image url"></TextBlock>
+                <TextBox Text="{Binding SelectedProduct.ImageUrl, Mode=TwoWay}"></TextBox>
+                <Button Command="{Binding EditCommand}" Content="Save"></Button>
+                <Button Command="{Binding DeleteCommand}" Content="Delete"></Button>
+                <Button Command="{Binding CreateCommand}" Content="Create"></Button>
+            </StackPanel>
+       
+        </Grid>
+        
+        
+    
+    
+    </DockPanel>
+</Window>

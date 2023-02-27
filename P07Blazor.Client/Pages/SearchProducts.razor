@@ -1,0 +1,33 @@
+﻿@page "/search/{searchText}/{page:int}/{pageSize:int}"
+@inject IProductService ProductService
+
+ 
+<ProductSearchList />
+
+
+@code {
+
+	[Parameter]
+	public string SearchText { get; set; }
+
+	[Parameter]
+	public int Page { get; set; }
+
+	[Parameter]
+	public int PageSize { get; set; }
+
+
+	protected override async Task OnInitializedAsync()
+	{
+		//var products = (await ProductService.GetProducts()).Data;
+		//await ProductService.SearchProducts(SearchText, Page, PageSize);
+	}
+
+    protected override async Task OnParametersSetAsync()
+    {
+        //var products = (await ProductService.GetProducts()).Data;
+        await ProductService.SearchProducts(SearchText, Page, PageSize);
+    }
+
+
+}
