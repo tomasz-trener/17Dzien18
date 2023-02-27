@@ -34,6 +34,9 @@ namespace P03AplikacjaPogodaClientAPI.Tools
             {
                 client.BaseAddress = new Uri(_baseURl);
                 var result = await client.PutAsJsonAsync("api/product",product);
+
+                var resultMessage = await result.Content.ReadAsStringAsync(); // w ten sposób możemy odczytać błąd, który leci z API
+
                 var content =await result.Content.ReadFromJsonAsync<ServiceReponse<Product>>();
                 return content.Data;
             }
@@ -79,6 +82,10 @@ namespace P03AplikacjaPogodaClientAPI.Tools
             {
                 client.BaseAddress = new Uri(_baseURl);
                 var result = await client.PostAsJsonAsync("api/product", productToCreate);
+
+                var resultMessage = await result.Content.ReadAsStringAsync(); // w ten sposób możemy odczytać błąd, który leci z API
+
+
                 var content = await result.Content.ReadFromJsonAsync<ServiceReponse<Product>>();
                 return content.Data;
             }

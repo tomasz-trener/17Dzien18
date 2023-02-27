@@ -31,7 +31,10 @@ namespace P07Blazor.Client.Services.ProductService
                 Description = x.Description,
                 MaterialCategory = x.MaterialCategory?.Name,
                 Title = x.Title,
-                Adjectives = x.Product_ProductAdjectives?.Select(y => y.ProductAdjective.Name).ToArray()
+                Adjectives = x.Product_ProductAdjectives?.Select(y => y.ProductAdjective.Name).ToArray(),
+                PriceFrom = x.Product_ProductAdjectives?.Min(y=>y?.Price),
+                PriceTo = x.Product_ProductAdjectives?.Max(y => y?.Price)
+
             }).ToArray();
 
             ProductsChanged?.Invoke();
@@ -49,7 +52,9 @@ namespace P07Blazor.Client.Services.ProductService
                 Description = x.Description,
                 MaterialCategory = x.MaterialCategory?.Name,
                 Title = x.Title,
-                Adjectives = x.Product_ProductAdjectives?.Select(y => y.ProductAdjective.Name).ToArray()
+                Adjectives = x.Product_ProductAdjectives?.Select(y => y.ProductAdjective.Name).ToArray(),
+                PriceFrom = x.Product_ProductAdjectives?.Min(y => y?.Price),
+                PriceTo = x.Product_ProductAdjectives?.Max(y => y?.Price)
             }).ToArray();
 
             ProductsChanged?.Invoke();

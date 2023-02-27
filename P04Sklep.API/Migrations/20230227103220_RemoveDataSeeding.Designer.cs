@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using P04Sklep.API.Data;
 
@@ -11,9 +12,11 @@ using P04Sklep.API.Data;
 namespace P04Sklep.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230227103220_RemoveDataSeeding")]
+    partial class RemoveDataSeeding
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,7 +43,7 @@ namespace P04Sklep.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MaterialCategories", (string)null);
+                    b.ToTable("MaterialCategories");
                 });
 
             modelBuilder.Entity("P05Sklep.Shared.Product", b =>
@@ -78,7 +81,7 @@ namespace P04Sklep.API.Migrations
 
                     b.HasIndex("MaterialCategoryId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("P05Sklep.Shared.ProductAdjective", b =>
@@ -95,7 +98,7 @@ namespace P04Sklep.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductAdjectives", (string)null);
+                    b.ToTable("ProductAdjectives");
                 });
 
             modelBuilder.Entity("P05Sklep.Shared.Product_ProductAdjective", b =>
@@ -113,7 +116,7 @@ namespace P04Sklep.API.Migrations
 
                     b.HasIndex("ProductAdjectiveId");
 
-                    b.ToTable("Product_ProductAdjectives", (string)null);
+                    b.ToTable("Product_ProductAdjectives");
                 });
 
             modelBuilder.Entity("P05Sklep.Shared.Product", b =>

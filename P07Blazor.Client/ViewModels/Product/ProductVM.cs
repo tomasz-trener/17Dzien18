@@ -12,9 +12,9 @@ namespace P07Blazor.Client.ViewModels.Product
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
 
-        public double PriceFrom { get; set; }
+        public double? PriceFrom { get; set; } = 0;
 
-        public double PriceTo { get; set; }
+        public double? PriceTo { get; set; } = 0;
 
         public string MaterialCategory { get; set; }
 

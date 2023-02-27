@@ -33,10 +33,10 @@ namespace P04Sklep.API.Data
             //         Title = "product1"
             //     });
 
-            modelBuilder.Entity<MaterialCategory>().HasData(ProductSeeder.GenerateMaterialCategory());
-            modelBuilder.Entity<Product>().HasData(ProductSeeder.GenerateProductData());
-            modelBuilder.Entity<ProductAdjective>().HasData(ProductSeeder.GenerateProductAdjective());
-            modelBuilder.Entity<Product_ProductAdjective>().HasData(ProductSeeder.GenerateProduct_ProductAdjective());
+            //modelBuilder.Entity<MaterialCategory>().HasData(ProductSeeder.GenerateMaterialCategory());
+            //modelBuilder.Entity<Product>().HasData(ProductSeeder.GenerateProductData());
+            //modelBuilder.Entity<ProductAdjective>().HasData(ProductSeeder.GenerateProductAdjective());
+            //modelBuilder.Entity<Product_ProductAdjective>().HasData(ProductSeeder.GenerateProduct_ProductAdjective());
         }
 
         public DbSet<Product> Products { get; set; }

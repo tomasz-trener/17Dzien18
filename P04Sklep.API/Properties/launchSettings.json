@@ -10,6 +10,16 @@
   },
     "profiles": {
 
+        "P04Sklep.API": {
+            "commandName": "Project",
+            "dotnetRunMessages": true,
+            "launchBrowser": true,
+            "launchUrl": "swagger",
+            "applicationUrl": "https://localhost:7140;http://localhost:5283",
+            "environmentVariables": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
+        },
         "Azure.API": {
             "commandName": "Project",
             "dotnetRunMessages": true,
@@ -33,16 +43,7 @@
         },
 
 
-        "P04Sklep.API": {
-            "commandName": "Project",
-            "dotnetRunMessages": true,
-            "launchBrowser": true,
-            "launchUrl": "swagger",
-            "applicationUrl": "https://localhost:7140;http://localhost:5283",
-            "environmentVariables": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            }
-        },
+
         "IIS Express": {
             "commandName": "IISExpress",
             "launchBrowser": true,
