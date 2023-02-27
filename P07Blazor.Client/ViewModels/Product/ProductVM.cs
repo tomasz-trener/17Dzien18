@@ -16,9 +16,11 @@ namespace P07Blazor.Client.ViewModels.Product
 
         public double? PriceTo { get; set; } = 0;
 
-        public string MaterialCategory { get; set; }
+        public string MaterialCategory { get; set; } = string.Empty;
 
         public string[] Adjectives { get; set; }
+
+        public string ImageUrl { get; set; } = string.Empty;
 
 
         public string ProductAdjetiveCssClass(string ProductAdjectiveName)

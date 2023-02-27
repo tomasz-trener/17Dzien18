@@ -16,16 +16,16 @@ namespace P07Blazor.Client.Services.ProductService
             _httpClient = httpClient;
         }
 
-        public Product[] Products { get; set; }
+       // public Product[] Products { get; set; }
         public ProductVM[] ProductsVM { get; set; }
-
+       
         public async Task GetProducts()
         {
             var result = await _httpClient.GetFromJsonAsync<ServiceReponse<Product[]>>("api/product");
 
-            Products = result.Data;
+          //  Products = result.Data;
 
-            ProductsVM = Products.Select(x => new ProductVM()
+            ProductsVM = result.Data.Select(x => new ProductVM()
             {
                 Id = x.Id,
                 Description = x.Description,
@@ -33,7 +33,8 @@ namespace P07Blazor.Client.Services.ProductService
                 Title = x.Title,
                 Adjectives = x.Product_ProductAdjectives?.Select(y => y.ProductAdjective.Name).ToArray(),
                 PriceFrom = x.Product_ProductAdjectives?.Min(y=>y?.Price),
-                PriceTo = x.Product_ProductAdjectives?.Max(y => y?.Price)
+                PriceTo = x.Product_ProductAdjectives?.Max(y => y?.Price),
+                ImageUrl = x.ImageUrl
 
             }).ToArray();
 
@@ -44,9 +45,9 @@ namespace P07Blazor.Client.Services.ProductService
         {
             var result = await _httpClient.GetFromJsonAsync<ServiceReponse<Product[]>>($"api/product/search/{text}/{page}/{pageSize}");
 
-            Products = result.Data;
+         //   Products = result.Data;
 
-            ProductsVM = Products.Select(x => new ProductVM()
+            ProductsVM = result.Data.Select(x => new ProductVM()
             {
                 Id = x.Id,
                 Description = x.Description,

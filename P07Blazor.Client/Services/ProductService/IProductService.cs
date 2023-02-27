@@ -5,7 +5,7 @@ namespace P07Blazor.Client.Services.ProductService
 {
     public interface IProductService
     {
-        Product[] Products { get; set; }
+      //  Product[] Products { get; set; }
 
         ProductVM[] ProductsVM { get; set; }
 
